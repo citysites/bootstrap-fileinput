@@ -7190,8 +7190,15 @@
         if (theme) {
           t = $.fn.fileinputThemes[theme] || {};
         }
-        if (lang !== "en" && !$h.isEmpty($.fn.fileinputLocales[lang])) {
-          l = $.fn.fileinputLocales[lang] || {};
+        if (lang !== "en") {
+          if (!$h.isEmpty($.fn.fileinputLocales[lang])) {
+            l = $.fn.fileinputLocales[lang];
+          } else {
+            lang = lang.split('-', 2);
+            if (lang.length > 1 && !$h.isEmpty($.fn.fileinputLocales[lang[0]])) {
+              l = $.fn.fileinputLocales[lang[0]];
+            }
+          }
         }
         opt = $.extend(true, {}, $.fn.fileinput.defaults, t, $.fn.fileinputLocales.en, l, optObj, self.data());
         data = new FileInput(this, opt);
